@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Post Title</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+	<nav>
+		<a href="index.html">Home</a>
+		<a href="about.html">About</a>
+	</nav>
+
+	<main>
+		<article id="post-content">
+			<h1>Post Title</h1>
+			<p>Post content goes here...</p>
+		</article>
+	</main>
+
+	<script>
+		// Simple script to display post content based on query parameters
+		const urlParams = new URLSearchParams(window.location.search);
+		const postId = urlParams.get('id');
+		// Fetch and display post content based on postId here
+	</script>
+</body>
+
+</html>
