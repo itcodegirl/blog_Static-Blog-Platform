@@ -86,3 +86,87 @@ function displayPosts(postsToDisplay) {
 }
 
 displayPosts(posts); // Initially display all posts
+
+// Firebase configuration
+const firebaseConfig = {
+	apiKey: "your-api-key",
+	authDomain: "your-app.firebaseapp.com",
+	databaseURL: "https://your-app.firebaseio.com",
+	projectId: "your-project-id",
+	storageBucket: "your-app.appspot.com",
+	messagingSenderId: "your-sender-id",
+	appId: "your-app-id"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// Function to display comments
+function loadComments(postId) {
+	const commentsContainer = document.getElementById('comments');
+	commentsContainer.innerHTML = ''; // Clear old comments
+
+	db.collection('comments').where('postId', '==', postId).get()
+		.then(snapshot => {
+			snapshot.forEach(doc => {
+				const comment = doc.data();
+				const commentDiv = document.createElement('div');
+				commentDiv.innerHTML = `<p>${comment.text}</p>`;
+				commentsContainer.appendChild(commentDiv);
+			});
+		});
+}
+
+// JavaScript(Saving and Fetching Comments from Firebase):
+// Firebase configuration
+const firebaseConfig = {
+	apiKey: "your-api-key",
+	authDomain: "your-app.firebaseapp.com",
+	databaseURL: "https://your-app.firebaseio.com",
+	projectId: "your-project-id",
+	storageBucket: "your-app.appspot.com",
+	messagingSenderId: "your-sender-id",
+	appId: "your-app-id"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// Function to display comments
+function loadComments(postId) {
+	const commentsContainer = document.getElementById('comments');
+	commentsContainer.innerHTML = ''; // Clear old comments
+
+	db.collection('comments').where('postId', '==', postId).get()
+		.then(snapshot => {
+			snapshot.forEach(doc => {
+				const comment = doc.data();
+				const commentDiv = document.createElement('div');
+				commentDiv.innerHTML = `<p>${comment.text}</p>`;
+				commentsContainer.appendChild(commentDiv);
+			});
+		});
+}
+
+// Add comment
+document.getElementById('submit-comment').addEventListener('click', function () {
+	const commentText = document.getElementById('comment-input').value;
+	if (commentText) {
+		db.collection('comments').add({
+			text: commentText,
+			postId: postId, // Assume postId is available
+			timestamp: firebase.firestore.FieldValue.serverTimestamp()
+		}).then(() => {
+			loadComments(postId);
+			document.getElementById('comment-input').value = ''; // Clear input
+		});
+	}
+});
+
+// Load comments when post page is loaded
+const urlParams = new URLSearchParams(window.location.search);
+const postId = urlParams.get('id');
+loadComments(postId);
+
