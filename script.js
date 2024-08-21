@@ -60,3 +60,29 @@ fetchPosts().then(posts => {
 		postsContainer.appendChild(article);
 	});
 });
+
+// Assuming 'posts' is an array of blog post objects
+const searchInput = document.getElementById('search-bar');
+searchInput.addEventListener('input', function () {
+	const query = searchInput.value.toLowerCase();
+	const filteredPosts = posts.filter(post =>
+		post.title.toLowerCase().includes(query) ||
+		post.description.toLowerCase().includes(query)
+	);
+	displayPosts(filteredPosts);
+});
+
+function displayPosts(postsToDisplay) {
+	const postsContainer = document.getElementById('posts');
+	postsContainer.innerHTML = ''; // Clear previous posts
+	postsToDisplay.forEach(post => {
+		const article = document.createElement('article');
+		article.innerHTML = `
+      <h2><a href="post.html?id=${post.id}">${post.title}</a></h2>
+      <p>${post.description}</p>
+    `;
+		postsContainer.appendChild(article);
+	});
+}
+
+displayPosts(posts); // Initially display all posts
