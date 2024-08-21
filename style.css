@@ -1,0 +1,43 @@
+body {
+	font-family: Arial, sans-serif;
+	line-height: 1.6;
+	margin: 0;
+	padding: 0;
+}
+
+nav {
+	background-color: #333;
+	padding: 1rem;
+}
+
+nav a {
+	color: white;
+	text-decoration: none;
+	margin-right: 1rem;
+}
+
+main {
+	padding: 2rem;
+}
+
+#posts {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+}
+
+article {
+	background-color: #f4f4f4;
+	padding: 1rem;
+	border-radius: 5px;
+}
+
+article h2 {
+	margin: 0 0 1rem 0;
+}
+
+@media (max-width: 600px) {
+	main {
+		padding: 1rem;
+	}
+}
