@@ -34,3 +34,29 @@ if (postId) {
 		document.querySelector('p').textContent = post.content;
 	}
 }
+
+const spaceId = 'your-space-id';
+const accessToken = 'your-access-token';
+
+async function fetchPosts() {
+	const response = await fetch(`https://cdn.contentful.com/spaces/${spaceId}/entries?access_token=${accessToken}`);
+	const data = await response.json();
+	return data.items.map(item => ({
+		id: item.sys.id,
+		title: item.fields.title,
+		description: item.fields.description,
+		content: item.fields.content
+	}));
+}
+
+fetchPosts().then(posts => {
+	const postsContainer = document.getElementById('posts');
+	posts.forEach(post => {
+		const article = document.createElement('article');
+		article.innerHTML = `
+      <h2><a href="post.html?id=${post.id}">${post.title}</a></h2>
+      <p>${post.description}</p>
+    `;
+		postsContainer.appendChild(article);
+	});
+});
